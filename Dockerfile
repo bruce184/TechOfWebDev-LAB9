@@ -1,23 +1,23 @@
-# Base image: Node 18
+# 1. Base image: Node 18 nhẹ
 FROM node:18-alpine
 
-# Thư mục làm việc trong container
+# 2. Thư mục làm việc trong container
 WORKDIR /app
 
-# Copy file package để cài dependency
+# 3. Copy file package để cài dependency
 COPY package*.json ./
 
-# Cài dependencies
+# 4. Cài dependencies
 RUN npm install
 
-# Copy toàn bộ source còn lại vào container
+# 5. Copy toàn bộ source còn lại vào container
 COPY . .
 
-# Chạy migrate + seed để tạo DB SQLite trong image
+# 6. Tạo database SQLite + seed dữ liệu bên trong image
 RUN npm run migrate && npm run seed
 
-# Expose port (TRONG container)
+# 7. Expose port 3000 bên trong container
 EXPOSE 3000
 
-# Lệnh khởi chạy app
+# 8. Lệnh chạy app
 CMD ["npm", "start"]
